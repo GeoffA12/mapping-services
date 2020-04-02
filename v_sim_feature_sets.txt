@@ -1,0 +1,15 @@
+Vehicle Simulator Feature Sets:
+
+1. When simulator is opened, a welcome message should appear along with instructions for how to exit the program
+
+2. The simulator should print to the terminal vehicles are being loaded, which a success message if the vehicles are successfully retrieved, and a failure message if they are not.
+
+3. If the vehicles are not retrieved, program should restart.
+
+4. Once vehicles are retrieved, tester should be provided with options in the form of a table on what the tester can do with their vehicles.
+
+5. Anytime the options changeStatus, startHeartbeat, and killHeartbeat are called on any vehicle, change should be reflected on the fleet managers page
+
+6. Anytime a testing option is selected from the tester, a message should be printed to the terminal whether the vehicle test failed or not. This message should include the vehicles id to indicate which vehicle has passed or failed.
+
+7. Once the tester makes the exit command, program should terminate 
