@@ -16,6 +16,8 @@ class Car:
         self.current_long = current_long
         # Type : Boolean
         self.last_hb = None
+        # Type : Boolean
+        self.heartbeat = True
 
 
     def toString():
@@ -28,6 +30,8 @@ class Car:
         print("Current Lat :: ", self.current_lat, "\n")
         print("Current Lon :: ", self.current_long, "\n")
         print("Last Heartbeat :: ", self.last_hb, "\n")
+
+
 
 
 
