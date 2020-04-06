@@ -50,7 +50,7 @@ def main():
     again = "y"
     while again == "y":
         x = input("Enter your option here: ")
-        vehid = int(input("Enter the vehicle id number you want to stop reporting: "))
+        vehid = int(input("Enter the vehicle id number: "))
         # Kill a vehicle heartbeat
         if x == 'K' or x == 'k':
             if vehid in heartbeat_set:
@@ -60,15 +60,14 @@ def main():
 
         # Start a vehicle heartbeat
         elif x == 'S' or x == 's':
-            if vehid in heartbeat_set:
-                heartbeat_set.add(vehid)
-            else:
-                print("Vehicle id not found")
-        
+            heartbeat_set.add(vehid)
+
         # Change the vehicle status. Remember to use enumerated types here when you add code to check which status the tester wants to change to
         elif x == 'C' or x == 'c':
             if vehid in vehicle_dict:
                 changeVehicleStatus(vehid)
+            else:
+                print("Vehicle id not found.")
         else:
             print("Invalid option")
         again = input("Press y if you want to continue: ")
@@ -76,14 +75,18 @@ def main():
 
 # Fake a heartbeat report by using a file write.
 def reportHeartbeat():
+    lock = threading.Lock()
     while True:
+        lock.acquire()
         global heartbeat_set
         with open("test.txt", "a") as f:
             # If the vehicle isn't in our heartbeat_set, then it has gone 'silent'. So we won't report this vehicle.
             for vehicle in heartbeat_set:
                 f.write(str(vehicle))
                 f.write('\n')
+            f.write('\n')
             f.close()
+        lock.release()
         time.sleep(WRITE_TIME_INTERVAL)
 
 # # Read from the database to make sure our vehicle_dict values are always up to date
