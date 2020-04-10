@@ -17,7 +17,8 @@ class Car:
         # Type : Boolean
         self.last_hb = None
         # Type : Boolean
-        self.heartbeat = True
+        self.heartbeat = False
+
 
 
     def toString():
