@@ -32,169 +32,138 @@
   <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js"></script>
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.css" type="text/css" />
   <div id="map"></div>
-  <button id="eta_route_button" type="button" onclick="getRouteData_and_UpdateMap_with_Heartbeat(); getETA();">Get route and ETA</button>
-  <div id="heartbeat_title"> Vehicle Heartbeat: </div>
-  <div id="heartbeat_eta"> </div>
-  <div id="heartbeat_location"> </div>
 
-  <script>
+<script>
     mapboxgl.accessToken = 'pk.eyJ1IjoiY3N5Y2hldiIsImEiOiJjazZsbmg4c2gwYXU3M21zOG55aTljcTBuIn0.G5UXjF-3_0mXKo6huFgLwg';
     //vehicle simulator map
     var map = new mapboxgl.Map({
-      container: 'map', // HTML container id
-      style: 'mapbox://styles/mapbox/streets-v9', // style URL
-      center: [-97.7553, 30.2264], // starting position as [lng, lat]
-      zoom: 13
+        container: 'map', // HTML container id
+        style: 'mapbox://styles/mapbox/streets-v9', // style URL
+        center: [-97.7553, 30.2264], // starting position as [lng, lat]
+        zoom: 13
     });
-    var car_ids = []
-    var carData =
-
-      [
-        {
-            "fleets": [
-                8,
-                5,
-                6,
-                7
-            ]
-        },
-        {
-            "vehicleid": 28,
-            "status": "active",
-            "licenseplate": "123456",
-            "fleetid": 5,
-            "make": "Toyota",
-            "model": "V-9",
-            "current_lat": 30.0,
-            "current_lon": 30.0,
-            "last_heartbeat": "0:28:02",
-            "date_added": "2018-03-29T13:34:00"
-        },
-        {
-            "vehicleid": 30,
-            "status": "active",
-            "licenseplate": "VA4891",
-            "fleetid": 5,
-            "make": "Toyota",
-            "model": "V-9",
-            "current_lat": 30.2459,
-            "current_lon": -97.7535,
-            "last_heartbeat": "23:03:09",
-            "date_added": "2018-03-29T00:00:00"
-        },
-        {
-            "vehicleid": 31,
-            "status": "active",
-            "licenseplate": "AZ4915",
-            "fleetid": 8,
-            "make": "Honda",
-            "model": "Civic",
-            "current_lat": 30.2490,
-            "current_lon": -97.7390,
-            "last_heartbeat": "23:03:09",
-            "date_added": "2020-03-28T08:51:22"
-        },
-        {
-            "vehicleid": 32,
-            "status": "active",
-            "licenseplate": "SP1234",
-            "fleetid": 6,
-            "make": "Tesla",
-            "model": "Model-X",
-            "current_lat": 30.2264,
-            "current_lon": -97.7289,
-            "last_heartbeat": "23:03:09",
-            "date_added": "2020-03-31T00:21:56"
-        },
-        {
-            "vehicleid": 51,
-            "status": "active",
-            "licenseplate": "JK0941",
-            "fleetid": 7,
-            "make": "Honda",
-            "model": "Civic",
-            "current_lat": 30.2264,
-            "current_lon": -97.8293,
-            "last_heartbeat": "23:03:09",
-            "date_added": "2020-04-08T13:30:39"
-        },
-        {
-            "vehicleid": 52,
-            "status": "active",
-            "licenseplate": "JA4891",
-            "fleetid": 7,
-            "make": "Honda",
-            "model": "Civic",
-            "current_lat": 30.2264,
-            "current_lon": -97.8922,
-            "last_heartbeat": "23:03:09",
-            "date_added": "2020-04-08T13:34:26"
-        }
-
-    ]
-
-    //url w/ api call with fixed beginning and ending lats and longs
-    //Todo: Add feature to be able to recieve an address and get the lats and longs to append to this url
-    //Access lat longs to update
-    var url = "https://api.mapbox.com/directions/v5/mapbox/driving/-97.724208,30.2264;-97.760131,30.328231?geometries=geojson&access_token=pk.eyJ1IjoiY3N5Y2hldiIsImEiOiJjazZsbmg4c2gwYXU3M21zOG55aTljcTBuIn0.G5UXjF-3_0mXKo6huFgLwg";
+    var json = [
+            {
+                "vehicleid": 28,
+                "status": "active",
+                "licenseplate": "123456",
+                "fleetid": 5,
+                "make": "Toyota",
+                "model": "V-9",
+                "current_lat": 30.0,
+                "current_lon": 30.0,
+                "last_heartbeat": "0:28:02",
+                "date_added": "2018-03-29T13:34:00"
+            },
+            {
+                "vehicleid": 30,
+                "status": "active",
+                "licenseplate": "VA4891",
+                "fleetid": 5,
+                "make": "Toyota",
+                "model": "V-9",
+                "current_lat": 30.2459,
+                "current_lon": -97.7535,
+                "last_heartbeat": "23:03:09",
+                "date_added": "2018-03-29T00:00:00"
+            },
+            {
+                "vehicleid": 31,
+                "status": "active",
+                "licenseplate": "AZ4915",
+                "fleetid": 8,
+                "make": "Honda",
+                "model": "Civic",
+                "current_lat": 30.2490,
+                "current_lon": -97.7390,
+                "last_heartbeat": "23:03:09",
+                "date_added": "2020-03-28T08:51:22"
+            },
+            {
+                "vehicleid": 32,
+                "status": "active",
+                "licenseplate": "SP1234",
+                "fleetid": 6,
+                "make": "Tesla",
+                "model": "Model-X",
+                "current_lat": 30.2264,
+                "current_lon": -97.7289,
+                "last_heartbeat": "23:03:09",
+                "date_added": "2020-03-31T00:21:56"
+            },
+            {
+                "vehicleid": 51,
+                "status": "active",
+                "licenseplate": "JK0941",
+                "fleetid": 7,
+                "make": "Honda",
+                "model": "Civic",
+                "current_lat": 30.2264,
+                "current_lon": -97.8293,
+                "last_heartbeat": "23:03:09",
+                "date_added": "2020-04-08T13:30:39"
+            },
+            {
+                "vehicleid": 52,
+                "status": "active",
+                "licenseplate": "JA4891",
+                "fleetid": 7,
+                "make": "Honda",
+                "model": "Civic",
+                "current_lat": 30.2264,
+                "current_lon": -97.8922,
+                "last_heartbeat": "23:03:09",
+                "date_added": "2020-04-08T13:34:26"
+            }
+        ]
 
     var vehicle_request = "https://supply.team22.softwareengineeringii.com/vehicleRequest"
-    carData_as_array = Object.values(carData);
     //remove the first element of the cara data (the fleets)
-    carData_as_array.shift()
-    console.log(carData_as_array)
-    carData_as_array.forEach((car) =>{
-      car_ids.push(car.vehicleid)
-    });
+    console.log(json)
+    var carids = []
     var geojson = [];
-    carData_as_array.forEach((car) => {
-      geojson.push({
-        type: 'Feature',
-        geometry: {
-          type: "Point",
-          coordinates: [car.current_lon, car.current_lat],
-          id: car.vehicleid.toString()
-        }
-      });
+    json.forEach(car => {
+        carids.push(car.vehicleid)
+        geojson.push({
+            type: 'Feature',
+            geometry: {
+                type: "Point",
+                coordinates: [car.current_lon, car.current_lat],
+                id: car.vehicleid.toString()
+            }
+        });
     });
     console.log(geojson);
-//This needs a datastream url in order for the points to be dynamic
-//Let me know if we want to do a pop up for the cars with their info
-    if(map) {
-      //Eventually this code should set the datastream for the window every 1.5 seconds??
-      // window.setInterval((){
-      //   map.getSource(id).setData(dataStreamUrl);
-      // }, 1500);
-      console.log(geojson);
-      for(car in geojson){
-        var id = geojson[car].geometry.id.toString()
-        map.addSource(id, {
-          'type': 'geojson',
-          'data': geojson[car]
-        });
-        //console.log(id)
-        map.addLayer({
-          'id': id,
-          'type': 'symbol',
-          'source': id,
-          'layout': {
-            // get the icon name from the source's "icon" property
-            // concatenate the name to get an icon from the style's sprite sheet
-            // get the title name from the source's "title" property
-            'icon-image': 'car-15',
+    //This needs a datastream url in order for the points to be dynamic
+    //Let me know if we want to do a pop up for the cars with their info
+    map.on('load', function() {
+        //Eventually this code should set the datastream for the window every 1.5 seconds??
+        // window.setInterval((){
+        //   map.getSource(id).setData(dataStreamUrl);
+        // }, 1500);
+        console.log(geojson);
+        for (car in geojson) {
+            var id = geojson[car].geometry.id.toString()
+            map.addSource(id, {
+                'type': 'geojson',
+                'data': geojson[car]
+            });
+            //console.log(id)
+            map.addLayer({
+                'id': id,
+                'type': 'symbol',
+                'source': id,
+                'layout': {
+                    // get the icon name from the source's "icon" property
+                    // concatenate the name to get an icon from the style's sprite sheet
+                    // get the title name from the source's "title" property
+                    'icon-image': 'car-15',
 
-          }
-        });
-    }
+                }
+            });
+        }
     });
-
-
-
-
-
-
-
-  </script>
+</script>
 
 </body>
 
