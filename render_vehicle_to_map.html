@@ -140,7 +140,6 @@
 
     var vehicle_request = "https://supply.team22.softwareengineeringii.com/vehicleRequest"
     carData_as_array = Object.values(carData);
-    //remove the first element of the cara data (the fleets)
     carData_as_array.shift()
     console.log(carData_as_array)
     carData_as_array.forEach((car) =>{
@@ -158,13 +157,9 @@
       });
     });
     console.log(geojson);
-//This needs a datastream url in order for the points to be dynamic
-//Let me know if we want to do a pop up for the cars with their info
-    if(map) {
-      //Eventually this code should set the datastream for the window every 1.5 seconds??
-      // window.setInterval((){
-      //   map.getSource(id).setData(dataStreamUrl);
-      // }, 1500);
+
+
+    map.on('load', function() {
       console.log(geojson);
       for(car in geojson){
         var id = geojson[car].geometry.id.toString()
@@ -187,10 +182,6 @@
         });
     }
     });
-
-
-
-
 
 
 
