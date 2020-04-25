@@ -16,7 +16,7 @@
 * Uses the Directions API for both functions
 * getRoute() function retrieves a route based on a start and end point
 * getEta() function retrives an a distance and derives an ETA
-* For further documentation look to vehicle_utils_doc.md 
+* For further documentation look to the Mapbox driving api doc 
 
 
 ### Vehicle Rendering ###
