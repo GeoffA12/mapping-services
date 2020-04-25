@@ -28,5 +28,5 @@ def getEta(begin_long,begin_lat,end_long, end_lat ):
         eta = ((distance/1609.34)/30)*60
         #print("ETA IS:", "%.2f" % eta, "MINUTES")
         return "ETA IS:", "%.2f" % eta, "MINUTES"
-
-def getAddress()
+if __name__ == '__main__':
+    getRoute(-97.684822, )
